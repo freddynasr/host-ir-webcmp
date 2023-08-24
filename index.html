@@ -83,8 +83,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const irChannel = document.querySelector("ir-channel-manager");
+
         const url =
-          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwMDU3NjQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoicUpNQlM3T1FxTUhEUHFrMlVQcjlxbWp0dTZaWDlmMTQrQlJyTUtKYnZIND0ifQ.w5eRtT2_KtkEa7mt2LtTxEzHyeoMBeVYe6RVooVsfIU";
+          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwNzgyMDMsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiSEZpRVZhRFpTWDhsNmlXWlBVV21kZzVGa1oxK3FpTkJ0VG1KQ2VTanZZZz0ifQ.frXrUrO0cHlghZ4Zqm8fde1RR4iw7Inoir55LLsOT4w";
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -105,6 +106,7 @@
         fetch(url, requestOptions)
           .then((response) => response.json())
           .then((result) => {
+            console.log(result)
             const res = JSON.parse(result.My_Result[0].DATA);
             console.log(res);
             irChannel.listData = [res];
@@ -115,8 +117,9 @@
     <script>
       const irChannel = document.querySelector("ir-channel-manager");
       irChannel.addEventListener("fetchApi", (e) => {
+        console.log('Fetching to server')
         const url =
-          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwMDU3NjQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoicUpNQlM3T1FxTUhEUHFrMlVQcjlxbWp0dTZaWDlmMTQrQlJyTUtKYnZIND0ifQ.w5eRtT2_KtkEa7mt2LtTxEzHyeoMBeVYe6RVooVsfIU";
+          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwNzgyMDMsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiSEZpRVZhRFpTWDhsNmlXWlBVV21kZzVGa1oxK3FpTkJ0VG1KQ2VTanZZZz0ifQ.frXrUrO0cHlghZ4Zqm8fde1RR4iw7Inoir55LLsOT4w";
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -125,7 +128,7 @@
         console.log(d);
 
         var raw = JSON.stringify({
-          NOSQL_ID: 3,
+          NOSQL_ID: 15,
           ENTITY_NAME: "TBL_AC",
           ENTITY_KEY: 42,
           ENTITY_FIELD: "CHANNELS",
@@ -144,6 +147,32 @@
           .then((result) => console.log(result))
           .catch((error) => console.log("error", error));
       });
-    </script>
+
+      irChannel.addEventListener('requestApiDelete', (e) => {
+        const url = "https://gateway.igloorooms.com/IR/Delete_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwNzgyMDMsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiSEZpRVZhRFpTWDhsNmlXWlBVV21kZzVGa1oxK3FpTkJ0VG1KQ2VTanZZZz0ifQ.frXrUrO0cHlghZ4Zqm8fde1RR4iw7Inoir55LLsOT4w";
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          NOSQL_ID: e,
+          ENTITY_NAME: "TBL_AC",
+          ENTITY_KEY: 42,
+          ENTITY_FIELD: "CHANNELS",
+        });
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+        fetch(url, requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
+      });
+
+    </script> 
+     
   </body>
 </html>
