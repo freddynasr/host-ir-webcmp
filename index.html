@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <meta
+      name="description"
+      content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard." />
+    <meta
+      name="keywords"
+      content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard" />
+    <meta name="author" content="PIXINVENT" />
+    <title>IR Guest Info</title>
+
+    <link
+      rel="apple-touch-icon"
+      href="./app-assets/images/ico/apple-icon-120.png" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="./app-assets/images/ico/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700"
+      rel="stylesheet" />
+
+    <!-- BEGIN: Vendor CSS-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/vendors/css/vendors.min.css" />
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/bootstrap-extended.css" />
+    <link rel="stylesheet" type="text/css" href="./app-assets/css/colors.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/components.css" />
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/core/menu/menu-types/horizontal-menu.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/core/colors/palette-gradient.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./app-assets/css/pages/login-register.css" />
+    <!-- END: Page CSS-->
+
+    <script type="module" src="./ir-webcmp/ir-webcmp.esm.js"></script>
+
+    <style></style>
+  </head>
+
+  <body>
+    <ir-channel-manager></ir-channel-manager>
+    <!-- <ir-channel-select></ir-channel-select> -->
+
+    <!-- <ir-input-text
+      label-background="white"
+      label-position="right"
+      label-border="none"></ir-input-text> -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const irChannel = document.querySelector("ir-channel-manager");
+        const url =
+          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwMDU3NjQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoicUpNQlM3T1FxTUhEUHFrMlVQcjlxbWp0dTZaWDlmMTQrQlJyTUtKYnZIND0ifQ.w5eRtT2_KtkEa7mt2LtTxEzHyeoMBeVYe6RVooVsfIU";
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          ENTITY_NAME: "TBL_AC",
+          ENTITY_KEY: "42",
+          ENTITY_FIELD: "CHANNELS",
+        });
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(url, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            const res = JSON.parse(result.My_Result[0].DATA);
+            console.log(res);
+            irChannel.listData = [res];
+          })
+          .catch((error) => console.log("error", error));
+      });
+    </script>
+    <script>
+      const irChannel = document.querySelector("ir-channel-manager");
+      irChannel.addEventListener("fetchApi", (e) => {
+        const url =
+          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTMwMDU3NjQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoicUpNQlM3T1FxTUhEUHFrMlVQcjlxbWp0dTZaWDlmMTQrQlJyTUtKYnZIND0ifQ.w5eRtT2_KtkEa7mt2LtTxEzHyeoMBeVYe6RVooVsfIU";
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let d = JSON.stringify(e.detail);
+        console.log(d);
+
+        var raw = JSON.stringify({
+          NOSQL_ID: 3,
+          ENTITY_NAME: "TBL_AC",
+          ENTITY_KEY: 42,
+          ENTITY_FIELD: "CHANNELS",
+          DATA: d,
+        });
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(url, requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
+      });
+    </script>
+  </body>
+</html>
