@@ -86,7 +86,7 @@
       const irChannel = document.querySelector("ir-channel-manager");
       function getData() {
         const url =
-          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM2NjI5MzEsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWktBZFQ0QXlPVFlSSU1uZVkvOFlGalYwWitvUzVITXlsTT0ifQ.eJLUejyrYjBgLVsxM6oWhHiCZVnjuadZgyFtQgHxWUE";
+          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -124,7 +124,7 @@
       irChannel.addEventListener("fetchApi", (e) => {
         console.log("Fetching to server", NOSQL_ID);
         const url =
-          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM2NjI5MzEsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWktBZFQ0QXlPVFlSSU1uZVkvOFlGalYwWitvUzVITXlsTT0ifQ.eJLUejyrYjBgLVsxM6oWhHiCZVnjuadZgyFtQgHxWUE";
+          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -157,7 +157,7 @@
 
       irChannel.addEventListener("requestApiDelete", (e) => {
         const url =
-          "https://gateway.igloorooms.com/IR/Delete_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM2NjI5MzEsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWktBZFQ0QXlPVFlSSU1uZVkvOFlGalYwWitvUzVITXlsTT0ifQ.eJLUejyrYjBgLVsxM6oWhHiCZVnjuadZgyFtQgHxWUE";
+          "https://gateway.igloorooms.com/IR/Delete_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
