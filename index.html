@@ -80,105 +80,120 @@
       label-position="right"
       label-border="none"></ir-input-text> -->
 
-    <script></script>
     <script>
+      const API_URL = "https://gateway.igloorooms.com";
+      const TICKET = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTg0NDQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.EgzE3JDyNay3_wT8_ofusbIPQEjmLCmZAtVbi_7ERC4"
+    
+      const irChannelManager = document.querySelector("ir-channel-manager");
       let NOSQL_ID = -1;
-      const irChannel = document.querySelector("ir-channel-manager");
+    
+      function fetchData(url, requestOptions, successCallback, errorCallback) {
+        fetch(url, requestOptions)
+          .then((response) => response.json())
+          .then(successCallback)
+          .catch(errorCallback);
+      }
+    
       function getData() {
-        const url =
-          "https://gateway.igloorooms.com/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
+        const url = `${API_URL}/IR/Get_Nosql_By_ENTITY_NAME_ENTITY_KEY_ENTITY_FIELD?Ticket=${TICKET}`;
+        const headers = new Headers({ "Content-Type": "application/json" });
+        const requestData = {
           ENTITY_NAME: "TBL_AC",
           ENTITY_KEY: "42",
           ENTITY_FIELD: "CHANNELS",
-        });
-
-        var requestOptions = {
+        };
+    
+        const requestOptions = {
           method: "POST",
-          headers: myHeaders,
-          body: raw,
+          headers: headers,
+          body: JSON.stringify(requestData),
           redirect: "follow",
         };
-
-        fetch(url, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            const res = JSON.parse(result.My_Result[0].DATA);
-            irChannel.listData = res;
-            if (res.length > 0) {
-              NOSQL_ID = result.My_Result[0].NOSQL_ID;
-            } else {
-              NOSQL_ID = -1;
-            }
-          })
-          .catch((error) => console.log("error", error));
+    
+        const successCallback = (result) => {
+          const res = JSON.parse(result.My_Result[0].DATA);
+          irChannelManager.listData = res;
+          NOSQL_ID = res.length > 0 ? result.My_Result[0].NOSQL_ID : -1;
+        };
+    
+        const errorCallback = (error) => {
+          console.log("getData error:", error);
+        };
+    
+        fetchData(url, requestOptions, successCallback, errorCallback);
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        getData();
-      });
-
-      irChannel.addEventListener("fetchApi", (e) => {
-        console.log("Fetching to server", NOSQL_ID);
-        const url =
-          "https://gateway.igloorooms.com/IR/Edit_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        let d = JSON.stringify(e.detail);
-        console.log(d);
-
-        var raw = JSON.stringify({
+    
+      function updateData(data) {
+        const url = `${API_URL}/IR/Edit_Nosql?Ticket=${TICKET}`;
+        const headers = new Headers({ "Content-Type": "application/json" });
+        const requestData = {
           NOSQL_ID: NOSQL_ID,
           ENTITY_NAME: "TBL_AC",
           ENTITY_KEY: 42,
           ENTITY_FIELD: "CHANNELS",
-          DATA: d,
-        });
-
-        console.log(raw);
-
-        var requestOptions = {
+          DATA: JSON.stringify(data),
+        };
+    
+        const requestOptions = {
           method: "POST",
-          headers: myHeaders,
-          body: raw,
+          headers: headers,
+          body: JSON.stringify(requestData),
           redirect: "follow",
         };
-
-        fetch(url, requestOptions)
-          .then((response) => response.text())
-          .then((result) => getData())
-          .catch((error) => console.log("error", error));
-      });
-
-      irChannel.addEventListener("requestApiDelete", (e) => {
-        const url =
-          "https://gateway.igloorooms.com/IR/Delete_Nosql?Ticket=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM4MTU3OTUsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.G_GKPQpjBUcoNGYm5XpwwdO1Nx7j-fI5zxWvxihzYbs";
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-          NOSQL_ID: e,
+    
+        const successCallback = () => {
+          getData(); // Refresh data after update
+        };
+    
+        const errorCallback = (error) => {
+          console.log("updateData error:", error);
+        };
+    
+        fetchData(url, requestOptions, successCallback, errorCallback);
+      }
+    
+      function deleteData(nosqlId) {
+        const url = `${API_URL}/IR/Delete_Nosql?Ticket=${TICKET}`;
+        const headers = new Headers({ "Content-Type": "application/json" });
+        const requestData = {
+          NOSQL_ID: nosqlId,
           ENTITY_NAME: "TBL_AC",
           ENTITY_KEY: 42,
           ENTITY_FIELD: "CHANNELS",
-        });
-
-        var requestOptions = {
+        };
+    
+        const requestOptions = {
           method: "POST",
-          headers: myHeaders,
-          body: raw,
+          headers: headers,
+          body: JSON.stringify(requestData),
           redirect: "follow",
         };
-        fetch(url, requestOptions)
-          .then((response) => response.text())
-          .then((result) => console.log(result))
-          .catch((error) => console.log("error", error));
+    
+        const successCallback = () => {
+          console.log("Data deleted successfully");
+          getData(); // Refresh data after delete
+        };
+    
+        const errorCallback = (error) => {
+          console.log("deleteData error:", error);
+        };
+    
+        fetchData(url, requestOptions, successCallback, errorCallback);
+      }
+    
+      document.addEventListener("DOMContentLoaded", () => {
+        getData();
+      });
+    
+      irChannelManager.addEventListener("fetchApi", (e) => {
+        console.log("Fetching to server", NOSQL_ID);
+        updateData(e.detail);
+      });
+    
+      irChannelManager.addEventListener("requestApiDelete", (e) => {
+        deleteData(e);
       });
     </script>
+    
   </body>
 </html>
