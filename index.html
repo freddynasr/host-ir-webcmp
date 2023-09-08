@@ -81,9 +81,9 @@
       label-border="none"></ir-input-text> -->
 
     <script>
+      const ticket =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQzNzAxNTYsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWkxlT3A1SW9Cc1JZNzVUNlJ3aDN6KzdOL2VBM1BwMDJ5TT0ifQ.-K4-_rturKrEwuX31ZLA31cqe2eqXPB8Hl_nE8_KK-o";
       const irBookingDetails = document.querySelector("ir-booking-details");
-      let Ticket =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQxODE4MDgsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiWnNHbms0dWJVUXJxZXprS2JsUFp5SEh3N1VIdmk4M2xleTJqUWRPTGZJOVpKd3V5ZmRGSEVBPT0ifQ.lELHoDRwTAhpBkvX4DU5XifYWXrKXiZLVzy-PpqVU2U";
 
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -103,7 +103,7 @@
       };
 
       fetch(
-        `https://gateway.igloorooms.com/IR/Get_Bh_Full?Ticket=${Ticket}`,
+        `https://gateway.igloorooms.com/IR/Get_Bh_Full?Ticket=${ticket}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -129,7 +129,7 @@
       };
 
       fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${Ticket}`,
+        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -155,7 +155,7 @@
       };
 
       fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${Ticket}`,
+        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -181,7 +181,7 @@
       };
 
       fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${Ticket}`,
+        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -189,51 +189,6 @@
           irBookingDetails.foodArrangeCats = result.My_Result;
         })
         .catch((error) => console.log("error", error));
-
-      document.addEventListener("getSetupData", (e) => {
-        fetchDataFromAPI();
-      });
-      function fetchDataFromAPI() {
-        try {
-          const myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          const raw = JSON.stringify({
-            language: "EN",
-          });
-          const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          };
-          const response = fetch(
-            `https://gateway.igloorooms.com/IR/Get_Exposed_Countries?Ticket=${Ticket}`,
-            requestOptions
-          )
-            .then((response) => response.json())
-            .then((result) => {
-              irBookingDetails.setupDataCountries = result.My_Result.map(
-                (item) => {
-                  return {
-                    value: item.id,
-                    text: item.name,
-                  };
-                }
-              );
-              irBookingDetails.setupDataCountriesCode = result.My_Result.map(
-                (item) => {
-                  return {
-                    value: item.phone_prefix,
-                    text: item.phone_prefix,
-                  };
-                }
-              );
-            });
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          return null;
-        }
-      }
 
       irBookingDetails.addEventListener("submitForm", (e) => {
         console.log(e.detail);
