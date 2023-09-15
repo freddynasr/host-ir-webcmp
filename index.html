@@ -65,6 +65,8 @@
       type="text/css"
       href="./app-assets/css/pages/login-register.css" />
     <!-- END: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="./assets/colors.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/style.css" />
 
     <script type="module" src="./ir-webcmp/ir-webcmp.esm.js"></script>
 
@@ -82,14 +84,14 @@
 
     <script>
       const ticket =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQzNzAxNTYsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoidEx1dmxrYUxwWkxlT3A1SW9Cc1JZNzVUNlJ3aDN6KzdOL2VBM1BwMDJ5TT0ifQ.-K4-_rturKrEwuX31ZLA31cqe2eqXPB8Hl_nE8_KK-o";
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQ4NzA2NjAsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoicUpNQlM3T1FxTUZFZFVjTnplMlhzRGVlOS9jV09TV1JUdjNQRzBBOWtwbz0ifQ.KJNLnyOHuPFqLTwXLYWg1420_iFD7x93wGXqWboOh-Y";
       const irBookingDetails = document.querySelector("ir-booking-details");
 
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       var raw = JSON.stringify({
-        BH_ID: 13509433,
+        BH_ID: 13658735,
         LANGUAGE_ABBREVIATION: "EN",
         EXCLUDE_AC: false,
         EXCLUDE_BH_POLICIES: false,
@@ -161,6 +163,7 @@
         .then((response) => response.json())
         .then((result) => {
           irBookingDetails.bookingStatuses = result.My_Result;
+          irBookingDetails.dropdownStatuses = result.My_Result;
         })
         .catch((error) => console.log("error", error));
     </script>
@@ -199,6 +202,55 @@
       });
       irBookingDetails.addEventListener("pressCheckOut", (e) => {
         console.log("Check out", e.detail);
+      });
+
+      irBookingDetails.addEventListener("handlePaymentItemChange", (e) => {
+        console.log("Payment Item Change", e.detail);
+      });
+      // Generale Booleans
+      irBookingDetails.hasPrint = true;
+      irBookingDetails.hasReceipt = true;
+      irBookingDetails.hasDelete = true;
+      irBookingDetails.hasMenu = true;
+
+      // Room Booleans
+      irBookingDetails.hasRoomEdit = true;
+      irBookingDetails.hasRoomDelete = true;
+      irBookingDetails.hasRoomAdd = true;
+      irBookingDetails.hasCheckIn = true;
+      irBookingDetails.hasCheckOut = true;
+
+      // Listeners to the above booleans
+      irBookingDetails.addEventListener("handlePrintClick", (e) => {
+        console.log("Print");
+      });
+
+      irBookingDetails.addEventListener("handleReceiptClick", (e) => {
+        console.log("Receipt");
+      });
+
+      irBookingDetails.addEventListener("handleDeleteClick", (e) => {
+        console.log("Delete");
+      });
+
+      irBookingDetails.addEventListener("handleMenuClick", (e) => {
+        console.log("Menu");
+      });
+
+      irBookingDetails.addEventListener("handleRoomAdd", (e) => {
+        console.log("Room Add");
+      });
+
+      irBookingDetails.addEventListener("handleRoomEdit", (e) => {
+        console.log("Room Edit", e.detail);
+      });
+
+      irBookingDetails.addEventListener("handleRoomDelete", (e) => {
+        console.log("Room Delete", e.detail);
+      });
+
+      irBookingDetails.addEventListener("handleAddPayment", (e) => {
+        console.log("Add Payment");
       });
     </script>
 
