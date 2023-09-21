@@ -110,8 +110,32 @@
         .then((response) => response.json())
         .then((result) => {
           irBookingDetails.bookingDetails = result.My_Result;
+          if (result.My_Result.IS_DIRECT) {
+            getPaymentUrl(result.My_Result.BOOK_NBR);
+          }
         })
         .catch((error) => console.log("error", error));
+
+      function getPaymentUrl(id) {
+        console.log(id)
+        fetch(
+          `https://gateway.igloorooms.com/IR/Get_PCI_Card_Info_URL?Ticket=${ticket}`, {
+            method: "POST",
+            headers: myHeaders,
+            redirect: "follow",
+            body: JSON.stringify({
+              BOOK_NBR: 18206301,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result)
+            irBookingDetails.paymentDetailsUrl = result.My_Result;
+          })
+          .catch((error) => console.log("error", error))  
+      }
+
     </script>
 
     <script>
