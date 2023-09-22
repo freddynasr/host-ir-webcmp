@@ -82,8 +82,7 @@
       label-border="none"></ir-input-text> -->
 
     <script>
-      const ticket =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUzNjY1MjgsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiOUNueUJrSGFTSTBzSVBrc2pIRzhYZ1NyWkpXT21NZFVEL2Jzbkh0dGQrST0ifQ.IF7kCYy5MALVCg8z0IKFeb6MUtSngNtxCqD2sRm7Wuw";
+      const ticket = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTU1NDIxMjQsIkNMQUlNLTAxIjoicktLMi9DY1dQQnM9IiwiQ0xBSU0tMDIiOiI5UStMQm93VTl6az0iLCJDTEFJTS0wMyI6Ilp3Tys5azJoTzUwPSIsIkNMQUlNLTA0IjoiYXBWblRyR3hBaytaaVZ1WHMyRElDOU1mYkRmTzZGWCt5K3FkSE5xUE9nTT0ifQ.7EzIhDjttv9C8c2MfbFUmj9g8aDWF4ymKcK62qywTi8'
       const irBookingDetails = document.querySelector("ir-booking-details");
 
       var myHeaders = new Headers();
@@ -110,31 +109,11 @@
         .then((response) => response.json())
         .then((result) => {
           irBookingDetails.bookingDetails = result.My_Result;
-          if (result.My_Result.IS_DIRECT) {
-            getPaymentUrl(result.My_Result.BOOK_NBR);
-          }
+         
         })
         .catch((error) => console.log("error", error));
 
-      function getPaymentUrl(id) {
-        console.log(id)
-        fetch(
-          `https://gateway.igloorooms.com/IR/Get_PCI_Card_Info_URL?Ticket=${ticket}`, {
-            method: "POST",
-            headers: myHeaders,
-            redirect: "follow",
-            body: JSON.stringify({
-              BOOK_NBR: 18206301,
-            }),
-          }
-        )
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result)
-            irBookingDetails.paymentDetailsUrl = result.My_Result;
-          })
-          .catch((error) => console.log("error", error))  
-      }
+     
 
     </script>
 
@@ -307,6 +286,26 @@
       irBookingDetails.addEventListener("handleAddPayment", (e) => {
         console.log("Add Payment");
       });
+
+      irBookingDetails.addEventListener('eyePressHandler', (e) => {
+        console.log(e)
+        fetch(
+          `https://gateway.igloorooms.com/IR/Get_PCI_Card_Info_URL?Ticket=${ticket}`, {
+            method: "POST",
+            headers: myHeaders,
+            redirect: "follow",
+            body: JSON.stringify({
+              BOOK_NBR: 18206301,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result)
+            irBookingDetails.paymentDetailsUrl = result.My_Result;
+          })
+          .catch((error) => console.log("error", error))  
+      })
     </script>
 
     <script src="./app-assets/vendors/js/vendors.min.js"></script>
