@@ -260,7 +260,11 @@
         )
           .then((response) => response.json())
           .then((result) => {
-            console.log(result)
+            if (result.ExceptionMsg) {
+              irBookingDetails.paymentDetailsUrl = null;
+              irBookingDetails.paymentExceptionMessage = result.ExceptionMsg;
+              return;
+            }
             irBookingDetails.paymentDetailsUrl = result.My_Result;
           })
           .catch((error) => console.log("error", error))  
