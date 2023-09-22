@@ -139,7 +139,7 @@
         .then((response) => response.json())
         .then((result) => {
           irBookingDetails.statusCodes = result.My_Result;
-          irBookingDetails.languageAbreviation = "AR";
+          irBookingDetails.languageAbreviation = "EN";
           const bookStatusArray = result.My_Result.filter(
             (status) => status.TBL_NAME === "_BOOK_STATUS"
           );
@@ -152,29 +152,7 @@
    
 
     <script>
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        TBL_NAME: "_FOOD_ARRANGE_CAT",
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          irBookingDetails.foodArrangeCats = result.My_Result;
-        })
-        .catch((error) => console.log("error", error));
+     
 
       fetch(
         `https://gateway.igloorooms.com/IR/Get_Exposed_Countries?Ticket=${ticket}`,
@@ -268,7 +246,7 @@
         console.log("Add Payment");
       });
 
-      irBookingDetails.addEventListener('eyePressHandler', (e) => {
+      irBookingDetails.addEventListener('creditCardPressHandler', (e) => {
         console.log(e)
         fetch(
           `https://gateway.igloorooms.com/IR/Get_PCI_Card_Info_URL?Ticket=${ticket}`, {
