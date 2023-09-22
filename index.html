@@ -122,7 +122,7 @@
       myHeaders.append("Content-Type", "application/json");
 
       var raw = JSON.stringify({
-        TBL_NAME: "_ARRIVAL_TIME",
+        TBL_NAMES: ["_ARRIVAL_TIME", "_BOOK_STATUS", "_FOOD_ARRANGE_CAT"]
       });
 
       var requestOptions = {
@@ -133,42 +133,23 @@
       };
 
       fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
+        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME_Multi?Ticket=${ticket}`,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
-          irBookingDetails.arrivalTimes = result.My_Result;
+          irBookingDetails.statusCodes = result.My_Result;
+          irBookingDetails.languageAbreviation = "AR";
+          const bookStatusArray = result.My_Result.filter(
+            (status) => status.TBL_NAME === "_BOOK_STATUS"
+          );
+          console.log(bookStatusArray);
+          irBookingDetails.dropdownStatuses = bookStatusArray;
         })
         .catch((error) => console.log("error", error));
     </script>
 
-    <script>
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        TBL_NAME: "_BOOK_STATUS",
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(
-        `https://gateway.igloorooms.com/IR/Get_Setup_Entries_By_TBL_NAME?Ticket=${ticket}`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          irBookingDetails.bookingStatuses = result.My_Result;
-          irBookingDetails.dropdownStatuses = result.My_Result;
-        })
-        .catch((error) => console.log("error", error));
-    </script>
+   
 
     <script>
       var myHeaders = new Headers();
